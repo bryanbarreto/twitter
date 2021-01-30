@@ -13,6 +13,7 @@
 		C33CCB3225C5076A00036C4B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C33CCB3025C5076A00036C4B /* LaunchScreen.storyboard */; };
 		C33CCB3D25C5076A00036C4B /* TwitterMVVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33CCB3C25C5076A00036C4B /* TwitterMVVMTests.swift */; };
 		C33CCB4825C5076A00036C4B /* TwitterMVVMUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33CCB4725C5076A00036C4B /* TwitterMVVMUITests.swift */; };
+		C33CCB6525C508EC00036C4B /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33CCB6425C508EC00036C4B /* MainTabbarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		C33CCB4325C5076A00036C4B /* TwitterMVVMUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TwitterMVVMUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C33CCB4725C5076A00036C4B /* TwitterMVVMUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterMVVMUITests.swift; sourceTree = "<group>"; };
 		C33CCB4925C5076A00036C4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C33CCB6425C508EC00036C4B /* MainTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,12 @@
 		C33CCB2425C5076900036C4B /* TwitterMVVM */ = {
 			isa = PBXGroup;
 			children = (
+				C33CCB6325C5087700036C4B /* Model */,
+				C33CCB6225C5087600036C4B /* View */,
+				C33CCB6125C5087400036C4B /* ViewModel */,
+				C33CCB6025C5087300036C4B /* Controller */,
+				C33CCB5F25C5087200036C4B /* API */,
+				C33CCB5E25C5087100036C4B /* Utils */,
 				C33CCB2525C5076900036C4B /* AppDelegate.swift */,
 				C33CCB2725C5076900036C4B /* SceneDelegate.swift */,
 				C33CCB2E25C5076A00036C4B /* Assets.xcassets */,
@@ -120,6 +128,49 @@
 				C33CCB4925C5076A00036C4B /* Info.plist */,
 			);
 			path = TwitterMVVMUITests;
+			sourceTree = "<group>";
+		};
+		C33CCB5E25C5087100036C4B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		C33CCB5F25C5087200036C4B /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		C33CCB6025C5087300036C4B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C33CCB6425C508EC00036C4B /* MainTabbarController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		C33CCB6125C5087400036C4B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C33CCB6225C5087600036C4B /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C33CCB6325C5087700036C4B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,6 +304,7 @@
 			files = (
 				C33CCB2625C5076900036C4B /* AppDelegate.swift in Sources */,
 				C33CCB2825C5076900036C4B /* SceneDelegate.swift in Sources */,
+				C33CCB6525C508EC00036C4B /* MainTabbarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
