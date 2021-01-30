@@ -20,7 +20,7 @@ class FeedController: UIViewController {
     
     // MARK: - Helper Functions
     private func configureUI(){
-        let image = UIImage(systemName: "play.rectangle.fill")
+        let image = UIImage(systemName: Constants.Feed.navigationTitle)
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFill
         self.navigationItem.titleView = imageView

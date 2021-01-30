@@ -19,6 +19,9 @@
 		C33CCB7725C50BB300036C4B /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33CCB7625C50BB300036C4B /* NotificationController.swift */; };
 		C33CCB7C25C50BBE00036C4B /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33CCB7B25C50BBE00036C4B /* ConversationController.swift */; };
 		C33CCB8725C50FB600036C4B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33CCB8625C50FB600036C4B /* Extensions.swift */; };
+		C33CCB8D25C5433B00036C4B /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33CCB8C25C5433B00036C4B /* LoginController.swift */; };
+		C33CCB9225C5434100036C4B /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33CCB9125C5434100036C4B /* RegisterController.swift */; };
+		C33CCBA725C5460300036C4B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33CCBA625C5460300036C4B /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +60,9 @@
 		C33CCB7625C50BB300036C4B /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		C33CCB7B25C50BBE00036C4B /* ConversationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationController.swift; sourceTree = "<group>"; };
 		C33CCB8625C50FB600036C4B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		C33CCB8C25C5433B00036C4B /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		C33CCB9125C5434100036C4B /* RegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
+		C33CCBA625C5460300036C4B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				C33CCB8625C50FB600036C4B /* Extensions.swift */,
+				C33CCBA625C5460300036C4B /* Constants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -158,6 +165,7 @@
 		C33CCB6025C5087300036C4B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				C33CCB8B25C5432600036C4B /* Authentication */,
 				C33CCB6425C508EC00036C4B /* MainTabbarController.swift */,
 				C33CCB6C25C50B9400036C4B /* FeedController.swift */,
 				C33CCB7125C50BA600036C4B /* ExploreController.swift */,
@@ -186,6 +194,15 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		C33CCB8B25C5432600036C4B /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				C33CCB8C25C5433B00036C4B /* LoginController.swift */,
+				C33CCB9125C5434100036C4B /* RegisterController.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,10 +334,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C33CCB9225C5434100036C4B /* RegisterController.swift in Sources */,
+				C33CCBA725C5460300036C4B /* Constants.swift in Sources */,
 				C33CCB2625C5076900036C4B /* AppDelegate.swift in Sources */,
 				C33CCB7225C50BA600036C4B /* ExploreController.swift in Sources */,
 				C33CCB7725C50BB300036C4B /* NotificationController.swift in Sources */,
 				C33CCB8725C50FB600036C4B /* Extensions.swift in Sources */,
+				C33CCB8D25C5433B00036C4B /* LoginController.swift in Sources */,
 				C33CCB2825C5076900036C4B /* SceneDelegate.swift in Sources */,
 				C33CCB7C25C50BBE00036C4B /* ConversationController.swift in Sources */,
 				C33CCB6525C508EC00036C4B /* MainTabbarController.swift in Sources */,

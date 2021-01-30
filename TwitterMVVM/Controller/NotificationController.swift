@@ -14,7 +14,7 @@ class NotificationController: UIViewController {
     
     // MARK: - View Lifecycle
     override func viewDidLoad() {
-        self.navigationItem.title = "Notification"
+        self.navigationItem.title = Constants.Notification.navigationTitle
     }
     
     

@@ -14,7 +14,7 @@ class ConversationController: UIViewController {
     
     // MARK: - View Lifecycle
     override func viewDidLoad() {
-        self.navigationItem.title = "Conversation"
+        self.navigationItem.title = Constants.Conversation.navigationTitle
     }
     
     

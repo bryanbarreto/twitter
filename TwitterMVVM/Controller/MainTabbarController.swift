@@ -44,10 +44,14 @@ class MainTabbarController: UITabBarController {
     }
     
     private func configureViewControllers(){
-        let feedNav = self.buildNavigationController(rootViewController: FeedController(), tabbarItemImage: "house", selectedImage: "house.fill", title: "Feed")
-        let exploreNav = self.buildNavigationController(rootViewController: ExploreController(), tabbarItemImage: "magnifyingglass.circle", selectedImage: "magnifyingglass.circle.fill", title: "Explore")
-        let notificationNav = self.buildNavigationController(rootViewController: NotificationController(), tabbarItemImage: "heart", selectedImage: "heart.fill", title: "Notification")
-        let conversationNav = self.buildNavigationController(rootViewController: ConversationController(), tabbarItemImage: "envelope", selectedImage: "envelope.fill", title: "Conversation")
+        let feedNav = self.buildNavigationController(rootViewController: FeedController(), tabbarItemImage: Constants.Feed.tabbarImage, selectedImage: Constants.Feed.tabbarSelectedImage, title: Constants.Feed.tabbarTitle)
+        
+        let exploreNav = self.buildNavigationController(rootViewController: ExploreController(), tabbarItemImage: Constants.Explore.tabbarImage, selectedImage: Constants.Explore.tabbarSelectedImage, title: Constants.Explore.tabbarTitle)
+        
+        let notificationNav = self.buildNavigationController(rootViewController: NotificationController(), tabbarItemImage: Constants.Notification.tabbarImage, selectedImage: Constants.Notification.tabbarSelectedImage, title: Constants.Notification.tabbarTitle)
+        
+        let conversationNav = self.buildNavigationController(rootViewController: ConversationController(), tabbarItemImage: Constants.Conversation.tabbarImage, selectedImage: Constants.Conversation.tabbarSelectedImage, title: Constants.Conversation.tabbarTitle)
+        
         
         self.viewControllers = [feedNav, exploreNav, notificationNav, conversationNav]
     }
