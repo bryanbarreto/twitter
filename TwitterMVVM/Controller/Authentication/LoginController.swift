@@ -21,35 +21,41 @@ class LoginController: UIViewController {
     }()
     
     lazy var emailContainerView: UIView = {
-        let view = UIView()
-        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        view.backgroundColor = .red
-        
-        let iv = UIImageView()
-        iv.image = UIImage(systemName: Constants.TextFields.email)
-
-        view.addSubview(iv)
-
-        iv.anchor(left: view.leftAnchor , bottom: view.bottomAnchor , paddingLeft:8 , paddingBottom: 8)
-        iv.setDimensions(width: 24, height: 24)
-        
+        let view = Utils.inputContainerView(icon: Constants.TextFields.email, textfield: self.emailTextField)
         return view
     }()
     
     lazy var passwordContainerView: UIView = {
-        let view = UIView()
-        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        view.backgroundColor = .green
-        
-        let iv = UIImageView()
-        iv.image = UIImage(systemName: Constants.TextFields.password)
-        
-        view.addSubview(iv)
-        
-        iv.anchor(left: view.leftAnchor , bottom: view.bottomAnchor , paddingLeft:8 , paddingBottom: 8)
-        iv.setDimensions(width: 24, height: 24)
-        
+        let view = Utils.inputContainerView(icon: Constants.TextFields.email, textfield: self.passwordTextField)
         return view
+    }()
+    
+    private let emailTextField: UITextField = {
+        let tf = Utils.buildTextField(placeholder: "E-mail")
+        return tf
+    }()
+    
+    private let passwordTextField: UITextField = {
+        let tf = Utils.buildTextField(placeholder: "Senha")
+        tf.isSecureTextEntry = true
+        return tf
+    }()
+    
+    private let loginButton: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("Login", for: .normal)
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        btn.setTitleColor(.white, for: .normal)
+        btn.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+        btn.layer.cornerRadius = 25
+        btn.addTarget(self, action: #selector(tappedLogin), for: .touchUpInside)
+        return btn
+    }()
+    
+    private let dontHaveAccountButton: UIButton = {
+        let btn = Utils.buildAttributedButton(partOne: "Não tem conta?", partTwo: "Cadastre- se", fontSice: 18)
+        btn.addTarget(self, action: #selector(goToRegister), for: .touchUpInside)
+        return btn
     }()
     
     
@@ -58,6 +64,15 @@ class LoginController: UIViewController {
         self.configureUI()
     }
     
+    // MARK: - Selectors
+    @objc func tappedLogin(){
+        print("login")
+    }
+    
+    @objc func goToRegister(){
+        let controller = RegisterController()
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
     
     // MARK: - Helper Functions
     private func configureUI(){
@@ -77,6 +92,13 @@ class LoginController: UIViewController {
         self.view.addSubview(stack)
         
         stack.anchor(top: self.logoImageView.bottomAnchor, left: self.view.safeAreaLayoutGuide.leftAnchor, right: self.view.safeAreaLayoutGuide.rightAnchor, paddingTop: 20, paddingLeft: 10, paddingRight: 10)
+        
+        self.view.addSubview(self.dontHaveAccountButton)
+        self.dontHaveAccountButton.anchor(left: self.view.leftAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, right: self.view.rightAnchor, paddingLeft: 5, paddingBottom: 5, paddingRight: 5, height: 50)
+        
+        self.view.addSubview(self.loginButton)
+        self.loginButton.anchor(left: self.view.leftAnchor, bottom: self.dontHaveAccountButton.topAnchor, right: self.view.rightAnchor, paddingLeft: 40, paddingBottom: 10, paddingRight: 40, height: 50)
+        
     }
     
 }
