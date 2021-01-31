@@ -52,4 +52,33 @@ class Utils {
         
         return btn
     }
+    
+    static func buildAuthenticationButton(title: String) -> UIButton {
+        let btn = UIButton()
+        btn.setTitle(title, for: .normal)
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        btn.setTitleColor(.white, for: .normal)
+        btn.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+        btn.layer.cornerRadius = 25
+        return btn
+    }
+    
+    static func showImagePickerAlert(in vc: UIViewController, completion: @escaping (UIImagePickerController.SourceType) -> Void){
+        let alert = UIAlertController(title: "Perfil", message: "De onde gostaria de tirar a foto de perfil?", preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+        let cameraAction = UIAlertAction(title: "Câmera", style: .default) { _ in
+            completion(.camera)
+        }
+        
+        let galleryAction = UIAlertAction(title: "Galeria", style: .default) { _ in
+            completion(.photoLibrary)
+        }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(galleryAction)
+        alert.addAction(cameraAction)
+        
+        vc.present(alert, animated: true, completion: nil)
+    }
 }

@@ -42,12 +42,7 @@ class LoginController: UIViewController {
     }()
     
     private let loginButton: UIButton = {
-        let btn = UIButton()
-        btn.setTitle("Login", for: .normal)
-        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        btn.setTitleColor(.white, for: .normal)
-        btn.backgroundColor = UIColor.white.withAlphaComponent(0.3)
-        btn.layer.cornerRadius = 25
+        let btn = Utils.buildAuthenticationButton(title: "Login")
         btn.addTarget(self, action: #selector(tappedLogin), for: .touchUpInside)
         return btn
     }()
@@ -81,7 +76,6 @@ class LoginController: UIViewController {
         self.navigationController?.navigationBar.barStyle = .black
         
         self.view.addSubview(self.logoImageView)
-        
         self.logoImageView.centerX(inView: self.view, topAnchor: self.view.safeAreaLayoutGuide.topAnchor, paddingTop: 50)
         self.logoImageView.setDimensions(width: 150, height: 150)
         

@@ -45,5 +45,7 @@ struct Constants {
     struct TextFields {
         static let email = "mail.fill"
         static let password = "key.fill"
+        static let username = "person.fill"
+        static let fullName = "person.fill"
     }
 }
