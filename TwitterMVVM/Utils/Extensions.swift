@@ -95,3 +95,37 @@ extension UIColor {
     
     static let twitterBlue = UIColor.rgb(red: 29, green: 161, blue: 242)
 }
+
+
+// MARK: - UIViewController
+
+extension UIViewController {
+    func showError(message: String){
+        let alert = UIAlertController(title: "Erro", message: message, preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        
+        alert.addAction(okAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+
+
+// MARK: - Encodable
+
+extension Encodable {
+    var firebaseFormat: [String : Any]? {
+        guard let data =  try? JSONEncoder().encode(self) else {
+                    return nil
+                }
+                return try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any]
+    }
+}
+
+
+// MARK: - UIViewController
+
+extension UIViewController {
+    
+}

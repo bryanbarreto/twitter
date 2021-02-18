@@ -34,10 +34,12 @@ class Utils {
         return view
     }
     
-    static func buildTextField(placeholder ph: String, fontSize fs: CGFloat = 18) -> UITextField{
+    static func buildTextField(placeholder ph: String, fontSize fs: CGFloat = 18, keyboardType kt: UIKeyboardType = .default, capitalization cp: UITextAutocapitalizationType = .sentences) -> UITextField{
         let tf = UITextField()
         tf.placeholder = ph
         tf.textColor = .white
+        tf.keyboardType = kt
+        tf.autocapitalizationType = cp
         tf.font = UIFont.systemFont(ofSize: fs, weight: .bold)
         tf.attributedPlaceholder = NSAttributedString(string: ph, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.6)])
         return tf

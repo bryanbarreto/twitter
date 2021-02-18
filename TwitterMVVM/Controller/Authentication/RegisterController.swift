@@ -11,6 +11,9 @@ class RegisterController: UIViewController {
     
     // MARK: - Properties
     var imagePickerController: UIImagePickerController!
+    var profileImage: UIImage?
+    
+    var delegate: LoginControllerDelegate?
     
     private let alreadyHaveAccountButton: UIButton = {
         let btn = Utils.buildAttributedButton(partOne: "Já tem uma conta?", partTwo: "Faça Login", fontSice: 18)
@@ -19,7 +22,7 @@ class RegisterController: UIViewController {
     }()
     
     private let emailTtextfield: UITextField = {
-        let tf = Utils.buildTextField(placeholder: "E-mail")
+        let tf = Utils.buildTextField(placeholder: "E-mail", keyboardType: .emailAddress, capitalization: .none)
         return tf
     }()
     
@@ -29,7 +32,7 @@ class RegisterController: UIViewController {
     }()
     
     private let senhaTextfield: UITextField = {
-        let tf = Utils.buildTextField(placeholder: "Senha")
+        let tf = Utils.buildTextField(placeholder: "Senha", capitalization: .none)
         tf.isSecureTextEntry = true
         return tf
     }()
@@ -40,7 +43,7 @@ class RegisterController: UIViewController {
     }()
     
     private let nomeTextfield: UITextField = {
-        let tf = Utils.buildTextField(placeholder: "Nome Completo")
+        let tf = Utils.buildTextField(placeholder: "Nome Completo", capitalization: .words)
         return tf
     }()
     
@@ -50,7 +53,7 @@ class RegisterController: UIViewController {
     }()
     
     private let usuarioTextfield: UITextField = {
-        let tf = Utils.buildTextField(placeholder: "Usuário")
+        let tf = Utils.buildTextField(placeholder: "Usuário", capitalization: .none)
         return tf
     }()
     
@@ -71,7 +74,7 @@ class RegisterController: UIViewController {
         btn.layer.masksToBounds = true
         btn.addTarget(self, action: #selector(addProfilePhoto), for: .touchUpInside)
         btn.setBackgroundImage(UIImage(systemName: "camera"), for: .normal)
-        btn.imageView?.contentMode = .scaleAspectFit
+        btn.imageView?.contentMode = .scaleAspectFill
         btn.imageView?.clipsToBounds = true
         btn.layer.borderWidth = 1.5
         btn.layer.borderColor = UIColor.clear.cgColor
@@ -89,11 +92,50 @@ class RegisterController: UIViewController {
     }
     
     @objc func createAccount(){
-        print("creating account")
+        guard let email = self.emailTtextfield.text, !email.isEmpty,
+              let senha = self.senhaTextfield.text, !senha.isEmpty,
+              let nome = self.nomeTextfield.text, !nome.isEmpty,
+              let usuario = self.usuarioTextfield.text?.lowercased(), !usuario.isEmpty else {
+            self.showError(message: "Preencha os campos")
+            return
+        }
+        
+        guard let imageData = self.profileImage?.jpegData(compressionQuality: 0.3) else {
+            self.showError(message: "Escolha uma foto de perfil")
+            return
+        }
+        
+        Authentication.shared.createUser(email: email, password: senha) { [weak self] (uid) in
+            
+            Authentication.shared.uploadProfilePhoto(imageData, name: uid) { (profileImageDownloadURL) in
+                
+                let userData = User(name: nome, email: email, username: usuario, profileURL: profileImageDownloadURL)
+                Authentication.shared.saveAditionalUserData(userData, uid: uid) {
+                    //sucesso
+                    self?.delegate?.loginSuccess()
+                    self?.dismiss(animated: true, completion: nil)
+                    self?.dismiss(animated: true, completion: nil)
+                } onFail: { [weak self] (error) in
+                    self?.showError(message: error)
+                }
+
+                
+            } onFail: { [weak self] (error) in
+                self?.showError(message: error)
+            }
+        } onFail: { [weak self] (error) in
+            self?.showError(message: error)
+        }
     }
     
     @objc func addProfilePhoto(){
         Utils.showImagePickerAlert(in: self) { [weak self] (sourceType) in
+            
+            if !(UIImagePickerController.isSourceTypeAvailable(sourceType)){
+                self?.showError(message: "Este recurso não está disponível")
+                return
+            }
+            
             self?.imagePickerController = UIImagePickerController()
             self?.imagePickerController.allowsEditing = true
             self?.imagePickerController.sourceType = sourceType
@@ -110,7 +152,9 @@ class RegisterController: UIViewController {
         self.alreadyHaveAccountButton.anchor(left: self.view.leftAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, right: self.view.rightAnchor, paddingLeft: 5, paddingBottom: 5, paddingRight: 5, height: 50)
         
         self.view.addSubview(self.addPhotoButton)
-        self.addPhotoButton.setDimensions(width: 150, height: 150)
+        
+        let size = self.view.frame.size.width / 5
+        self.addPhotoButton.setDimensions(width: size, height:  size)
         self.addPhotoButton.centerX(inView: self.view, topAnchor: self.view.safeAreaLayoutGuide.topAnchor, paddingTop: 50)
         
         let stack = UIStackView(arrangedSubviews: [emailContentView, senhaContentView, nomeContentView, usuarioContentView])
@@ -132,6 +176,9 @@ extension RegisterController: UIImagePickerControllerDelegate, UINavigationContr
             print("Erro ao recuperar foto escolhida pelo usuário")
             return
         }
+        
+        self.profileImage = image
+        
         self.addPhotoButton.setImage(image, for: .normal)
         self.addPhotoButton.layer.borderColor = UIColor.white.cgColor
         self.addPhotoButton.layer.cornerRadius = self.addPhotoButton.frame.size.height / 2

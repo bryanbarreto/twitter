@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol LoginControllerDelegate {
+    func loginSuccess()
+}
+
 class LoginController: UIViewController {
     
     
     // MARK: - Properties
+    var delegate: LoginControllerDelegate?
+    
     var logoImageView: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(systemName: Constants.Login.logoImage)
@@ -31,12 +37,12 @@ class LoginController: UIViewController {
     }()
     
     private let emailTextField: UITextField = {
-        let tf = Utils.buildTextField(placeholder: "E-mail")
+        let tf = Utils.buildTextField(placeholder: "E-mail", keyboardType: .emailAddress, capitalization: .none)
         return tf
     }()
     
     private let passwordTextField: UITextField = {
-        let tf = Utils.buildTextField(placeholder: "Senha")
+        let tf = Utils.buildTextField(placeholder: "Senha", capitalization: .none)
         tf.isSecureTextEntry = true
         return tf
     }()
@@ -59,13 +65,29 @@ class LoginController: UIViewController {
         self.configureUI()
     }
     
+    
     // MARK: - Selectors
     @objc func tappedLogin(){
-        print("login")
+        guard let email = self.emailTextField.text, !email.isEmpty,
+              let password = self.passwordTextField.text, !password.isEmpty else {
+                print("preencha os campos")
+                return
+              }
+        
+        Authentication.shared.login(email: email, password: password) { (result, error) in
+            if let error = error {
+                print("DEBUG: " + error.localizedDescription)
+            }
+            
+//            Em caso de sucesso, chama a função do delegate (MainTabbarController)
+            self.delegate?.loginSuccess()
+            self.dismiss(animated: true)
+        }
     }
     
     @objc func goToRegister(){
         let controller = RegisterController()
+        controller.delegate = self.delegate
         self.navigationController?.pushViewController(controller, animated: true)
     }
     

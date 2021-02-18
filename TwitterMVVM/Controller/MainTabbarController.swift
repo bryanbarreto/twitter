@@ -10,6 +10,15 @@ import UIKit
 class MainTabbarController: UITabBarController {
     
     // MARK: - Properties
+    var user: User? {
+        didSet {
+            guard let nav = self.viewControllers?[0] as? UINavigationController else {return}
+            guard let feed = nav.viewControllers.first as? FeedController else {return}
+            
+            feed.user = user
+        }
+    }
+    
     let FloatingActionButton:UIButton = {
         let btn = UIButton()
         btn.frame.size.height = 56
@@ -23,11 +32,54 @@ class MainTabbarController: UITabBarController {
     }()
     
     
-    // MARK: - View Lifecycle
-    override func viewDidLoad() {
+    // MARK: - Selectors
+    @objc private func floatActionButtonTapped(){
+        guard let user = user else {return}
+        let controller = UploadTweetController(user: user)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true, completion: nil)
+    }
+    
+    // MARK: - API
+    
+    func fetchUserInformation(){
+        guard let uid = Authentication.shared.getUserUID() else {return}
+        UserService.shared.fetchUserInformation(uid: uid) { (user) in
+            self.user = user
+        }
+    }
+    
+    func authenticateUser(){
+//
+//        Authentication.shared.logoutUser {
+//
+//        } fail: {
+//
+//        }
+//
+//
+        if !Authentication.shared.authenticateUser() {
+            let controller = LoginController()
+            controller.delegate = self
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .fullScreen
+            DispatchQueue.main.async {
+                self.present(nav, animated: false, completion: nil)
+            }
+            return
+        }
+        
         self.configureTabbar()
         self.configureViewControllers()
         self.configureUI()
+        self.fetchUserInformation()
+    }
+    
+    // MARK: - View Lifecycle
+    override func viewDidLoad() {
+        self.view.backgroundColor = .white
+        self.authenticateUser()
     }
     
     
@@ -44,7 +96,7 @@ class MainTabbarController: UITabBarController {
     }
     
     private func configureViewControllers(){
-        let feedNav = self.buildNavigationController(rootViewController: FeedController(), tabbarItemImage: Constants.Feed.tabbarImage, selectedImage: Constants.Feed.tabbarSelectedImage, title: Constants.Feed.tabbarTitle)
+        let feedNav = self.buildNavigationController(rootViewController: FeedController(collectionViewLayout: UICollectionViewFlowLayout()), tabbarItemImage: Constants.Feed.tabbarImage, selectedImage: Constants.Feed.tabbarSelectedImage, title: Constants.Feed.tabbarTitle)
         
         let exploreNav = self.buildNavigationController(rootViewController: ExploreController(), tabbarItemImage: Constants.Explore.tabbarImage, selectedImage: Constants.Explore.tabbarSelectedImage, title: Constants.Explore.tabbarTitle)
         
@@ -67,9 +119,10 @@ class MainTabbarController: UITabBarController {
         
         return nav
     }
-    
-    @objc private func floatActionButtonTapped(){
-        
+}
+
+extension MainTabbarController: LoginControllerDelegate {
+    func loginSuccess() {
+        self.authenticateUser()
     }
-    
 }
